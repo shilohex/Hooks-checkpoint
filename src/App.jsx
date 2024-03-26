@@ -1,20 +1,28 @@
 import "./App.css";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import Home from "./pages/Home/Home.jsx";
-import About from "./pages/About/About.jsx";
+import { useState } from "react";
+import Movielist from "./Componet/Movielist.jsx";
+import data from "./data.js";
+import Filter from "./Componet/Filter.jsx";
 
 function App() {
-  let allowed = true;
+  const [movies, setMovies] = useState(data);
+  const [filter, setFilter] = useState()
+  const [title, setTitle]=useState()
+  const [rating, setRating] = useState()
+
+  console.log(movies)
+  function handleTitle(e) {
+    setTitle(e.target.value)
+    setFilter(e .target.value)
+  }
+
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route
-          path="/about"
-          element={allowed ? <About /> : <Navigate to={"/"} />}
-        />
-      </Routes>
-    </BrowserRouter>
+    <>
+      <h1 className="text-3xl font-bold underline text-[red]">Hello world!</h1>
+      {/* <Movielist list={movies} /> */}
+      <Filter list={movies} />
+      <input type="text" placeholder="Filter by title" value={title} onChange={}
+    </>
   );
 }
 
