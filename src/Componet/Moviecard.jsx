@@ -7,7 +7,7 @@ const Moviecard = ({
   rating = "4",
 }) => {
   return (
-    <div className="flex gap-4 flex-col border w-[20%]">
+    <div className="flex gap-4 flex-col border w-full  text-center">
       <div className=" w-full aspect-square border">
         <img src={posterURL} className="h-full" alt="" />
       </div>
