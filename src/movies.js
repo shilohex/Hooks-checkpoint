@@ -1,4 +1,4 @@
-const data = [
+const movie = [
   {
     title: "Shadow of the Void",
 
@@ -135,4 +135,4 @@ const data = [
   },
 ];
 
-export default data;
+export default movie;

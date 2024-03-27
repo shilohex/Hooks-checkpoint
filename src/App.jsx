@@ -1,89 +1,92 @@
 import "./App.css";
 import { useState } from "react";
 import Movielist from "./Componet/Movielist.jsx";
-import data from "./data.js";
+import movie from "./movies.js";
 import Filter from "./Componet/Filter.jsx";
 
 function App() {
-  const [movies, setMovies] = useState(data);
-  const [filter, setFilter] = useState(false);
-  const [title, setTitle] = useState();
-  const [rating, setRating] = useState();
-  // const [newmovie, setNewmovie] = useState({
-  //   title: "",
-  //   description: "",
-  //   posterURL: "",
-  //   rating: 0,
-  // });
-
-  console.log(movies);
-  function handleTitle(e) {
-    setTitle(e.target.value);
-    setFilter(e.target.value);
-    setRating("");
+  const [movies, setMovies] = useState(movie);
+  const [filterByTitle, SetfilterByTitle] = useState("");
+  const [filterByRating, setfilterByRating] = useState(0);
+  const [newMovies, setnewMovies] = useState({
+    title: "",
+    description: "",
+    posterURL: "",
+    rating: 0,
+  });
+  function handleSubmit(e) {
+    e.preventDefault();
+    setMovies([...movies, newMovies]);
+    setnewMovies({
+      title: "",
+      description: "",
+      posterURL: "",
+      rating: 0,
+    });
   }
-  function handleRating(e) {
-    setRating(e.target.value);
-    setFilter(e.target.value);
-    setTitle("");
-  }
-
+  console.log(newMovies);
   return (
     <>
-      <h1 className="text-3xl font-bold gap-5 underline text-[red]">MOVIES!</h1>
-      {/* <Movielist list={movies} /> */}
-      <Filter list={movies} />
-      <input
-        type="text"
-        placeholder="Filter by title"
-        value={title}
-        onChange={handleTitle}
-      />
-      <input
-        type="number"
-        placeholder="filter by rating"
-        value={rating}
-        onChange={handleRating}
-      />
-      {/* <div>
-        <div className="group">
-          <p>Add movie</p>
-          <form>
+      <h1 className="text-3xl font-bold underline">MOVIES</h1>
+      <div>
+        <input
+          type="text"
+          placeholder="Filter by title"
+          value={filterByTitle}
+          onChange={(e) => SetfilterByTitle(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Filter by rating"
+          value={filterByRating}
+          onChange={(e) => setfilterByRating(e.target.value)}
+        />
+        <div>
+          <p>Add Movie</p>
+          <form onSubmit={handleSubmit}>
             <input
               type="text"
-              placeholder="Title"
-              value={newmovie.title}
+              placeholder="title"
+              value={newMovies.title}
               onChange={(e) =>
-                setNewmovie({ ...newmovie, title: e.target.value })
+                setnewMovies({ ...newMovies, title: e.target.value })
               }
             />
             <input
               type="text"
-              placeholder="Description"
-              value={newmovie.description}
-              onChange={(e) => setNewmovie({ ...newmovie, description: e.target.value })}/>
-              
-              <input
+              placeholder="description"
+              value={newMovies.description}
+              onChange={(e) =>
+                setnewMovies({ ...newMovies, description: e.target.value })
+              }
+            />
+            <input
               type="text"
-              placeholder="Poster URL"
-              value={newmovie.posterURL}
-              onChange={(e) => setNewmovie({ ...newmovie, posterURL: e.target.value })}/>
-              <input
-              type="number"
-              placeholder="Rating"
-              value={newmovie.rating}
-              onChange={(e) => setNewmovie({ ...newmovie, rating: e.target.value })}/>
-              <button onClick={() => setMovies([...movies, newmovie])}>Add</button>
-
+              placeholder="posterURL"
+              value={newMovies.posterURL}
+              onChange={(e) =>
+                setnewMovies({ ...newMovies, posterURL: e.target.value })
+              }
+            />
+            <input
+              type="text"
+              placeholder="rating"
+              value={newMovies.rating}
+              onChange={(e) =>
+                setnewMovies({ ...newMovies, rating: e.target.value })
+              }
+            />
+            <button type="submit">Add</button>
           </form>
-        </div> */}
-      <div>
-        {filter ? (
-          <Filter title={title} rating={rating} list={movies} />
-        ) : (
-          <Movielist list={movies} />
-        )}
+        </div>
       </div>
+      {filterByRating || filterByTitle ? (
+        <Filter list={movies} rating={filterByRating} title={filterByTitle} />
+      ) : (
+        <Movielist list={movies} />
+      )}
+
+      {/* <Movielist list={movies} /> */}
     </>
   );
 }
